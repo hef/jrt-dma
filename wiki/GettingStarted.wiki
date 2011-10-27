@@ -1,0 +1,18 @@
+#summary Getting Started Guide for developers
+
+
+= Download =
+
+Download and install the following programs:
+
+  * [http://qt.nokia.com/downloads QT SDK]
+  * [http://tortoisesvn.tigris.org/ Tortoise SVN]
+
+= Developement Guide Lines =
+
+Do not work in directly in trunk!
+
+  # Create a branch from `trunk/` into a topic branch `branches/myBugFix`.
+  # Work in `branches/myBugFix`.
+  # Get [http://code.google.com/p/jrt-dma/issues/entry?show=review&former=sourcelist Code Review].
+  # once Code Review has been approved by another team member, merge code into trunk
