@@ -5,14 +5,14 @@
 
 Download and install the following programs:
 
-  * [http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html JDK]
+  * [http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html JDK]  (32 bit version)
   * [http://qt.nokia.com/downloads QT SDK]
   * [http://tortoisesvn.net/downloads.html Tortoise SVN]
 
 = Configure Environment =
 run the following in a CMD window session.
 {{{
-setx JAVA_HOME "C:\Program Files\Java\jdk1.7.0_01"
+setx JAVA_HOME "C:\Program Files (x86)\Java\jdk1.7.0_01"
 }}}
 restart QTCreator or any shell sessions you are using after using setx
 = Developement Guide Lines =
