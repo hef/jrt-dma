@@ -5,6 +5,7 @@
 
 Download and install the following programs:
 
+  * [http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html JDK]
   * [http://qt.nokia.com/downloads QT SDK]
   * [http://tortoisesvn.tigris.org/ Tortoise SVN]
 
