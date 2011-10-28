@@ -9,6 +9,12 @@ Download and install the following programs:
   * [http://qt.nokia.com/downloads QT SDK]
   * [http://tortoisesvn.net/downloads.html Tortoise SVN]
 
+= Configure Environment =
+run the following in a CMD window session.
+{{{
+     setx JAVA_HOME "C:\Program Files\Java\jdk1.7.0_01"
+}}}
+restart QTCreator or any shell sessions you are using after using setx
 = Developement Guide Lines =
 
 Do not work in directly in trunk!
