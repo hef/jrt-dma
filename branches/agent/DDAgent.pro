@@ -6,8 +6,11 @@
 
 TARGET = DDAgent
 TEMPLATE = lib
+CONFIG += dll
+CONFIG += console
 
 DEFINES += DDAGENT_LIBRARY
+DEFINES += QT_NODLL
 
 SOURCES += ddagent.cpp
 
