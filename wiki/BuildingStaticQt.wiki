@@ -1,0 +1,22 @@
+#Instructions for building 64 bit static QT
+
+= Requirements =
+MSVC 2010
+
+= Downloading =
+
+  # Download [http://download.qt.nokia.com/qt/source/qt-everywhere-opensource-src-4.7.4.zip qt-everywhere-opensource-src-4.7.4.zip]
+  # Unzip and rename parent folder to C:\Qt\x64-MSVC-2010-static-4.7.4\
+  # Download and unpack [ftp://ftp.qt.nokia.com/jom/jom.zip jom]  to C:\Qt\jom\
+
+= Building =
+Open the `Visual Studion x64 Win64 Command Prompt (2010)` from Start >> Microsoft Visual Studio 2010 >> Visual Studio Tools >> Vistual Studio x64 Win64 Command Promt (2010) and run:
+
+{{{
+cd C:\Qt\x64-MSVC-2010-static-4.7.4
+set QTDIR="C:\Qt\x64-MSVC-2010-static-4.7.4"
+set QMAKESPEC="win32-msvc2010"
+configure -debug-and-release -opensource -platform win32-msvc2010 -static -nomake demos -nomake examples -no-qt3support -qt-zlib -qt-gif -qt-libpng -qt-libmng -qt-libtiff -qt-libjpeg
+y
+..\jom\jom.exe
+}}}
