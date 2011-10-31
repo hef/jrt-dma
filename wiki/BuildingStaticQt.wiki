@@ -1,4 +1,4 @@
-#Instructions for building 64 bit static QT
+#summary Instructions for building 64 bit static QT
 
 = Requirements =
 MSVC 2010
