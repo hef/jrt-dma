@@ -1,11 +1,5 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2011-10-27T22:35:17
-#
-#-------------------------------------------------
-
-TARGET = DDAgent
 TEMPLATE = lib
+TARGET = DDAgent
 CONFIG += dll
 CONFIG += console
 
