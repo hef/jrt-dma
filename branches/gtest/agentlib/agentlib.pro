@@ -2,7 +2,7 @@ TEMPLATE = lib
 TARGET = DDAgent
 CONFIG += dll
 CONFIG += console
-include("../java_home.inc")
+include("../qmake/java_home.inc")
 DEFINES += DDAGENT_LIBRARY
 DEFINES += QT_NODLL
 
