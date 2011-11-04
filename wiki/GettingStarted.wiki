@@ -8,6 +8,7 @@ Download and install the following programs:
   * [http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html JDK]
   * [http://qt.nokia.com/downloads QT SDK]
   * [http://tortoisesvn.net/downloads.html Tortoise SVN]
+  * [http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=8279 Windows 7 SDK]
 
 = Configure Environment =
 run the following in a CMD window session.
