@@ -25,7 +25,7 @@ Once you have the code, double click the `agent.pro` file. QtCreator will open t
 == Static QT build ==
 
   # Install MSVC 2010
-  # Download and extract [http://dl.dropbox.com/u/15436827/x64-MSVC-2010-static-4.7.4.7z x64-MSVC-2010-static-4.7.4.7z] to `C:\Qt\x64-MSVC-2010-static-4.7.4\`.  The C:\Qt\ part is important. 
+  # Download and extract [http://dl.dropbox.com/u/15436827/x64-MSVC-2010-static-4.7.4.7z x64-MSVC-2010-static-4.7.4.7z] to `C:\Qt\x64-MSVC-2010-static-4.7.4\`.  The C:\Qt\ part is important.  You may need to isntall [http://www.7-zip.org/ 7zip].
   # Add 64-MSVC-2010-static-4.7.4 as a tool chain and use it with MSVC2010.
 
 
