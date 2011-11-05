@@ -1,5 +1,7 @@
 #summary Instructions for building 64 bit static QT
 
+Instead of running these instructions, download [http://dl.dropbox.com/u/15436827/x64-MSVC-2010-static-4.7.4.7z x64-MSVC-2010-static-4.7.4.7z] and unpack to C:\Qt\
+
 = Requirements =
 MSVC 2010
 
