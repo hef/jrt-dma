@@ -16,21 +16,22 @@ run the following in a CMD window session.
 {{{
 setx JAVA_HOME "C:\Program Files\Java\jdk1.7.0_01"
 }}}
-restart QTCreator or any shell sessions you are using after using setx
+
+Restart QTCreator or any shell sessions you are using after using setx.
 
 = Getting the code =
-goto http://code.google.com/p/jrt-dma/source/checkout for svn checkout instructions.
+Go to http://code.google.com/p/jrt-dma/source/checkout for svn checkout instructions.
 
 = Building =
 Once you have the code, double click the `agent.pro` file. QtCreator will open the project up.
 
 == Static QT build ==
 
-  # Install MSVC 2010
+  # Install MSVC 2010.
   # Download and extract [http://dl.dropbox.com/u/15436827/x64-MSVC-2010-static-4.7.4.7z x64-MSVC-2010-static-4.7.4.7z] to `C:\Qt\x64-MSVC-2010-static-4.7.4\`.  The C:\Qt\ part is important.  You may need to install [http://www.7-zip.org/ 7zip].
   # Add 64-MSVC-2010-static-4.7.4 as a tool chain and use it with MSVC2010.
-    * goto Tools >> Options >> Qt4 >> Add
-    * add C:\Qt\x64-MSVC-2010-static-4.7.4\qmake.exe
+    * Go to Tools >> Options >> Qt4 >> Add
+    * Add C:\Qt\x64-MSVC-2010-static-4.7.4\qmake.exe
     * Open DDAgent.pro if you havn't already.
     * Go to Projects >> Build
     * Change Qt Version: to `Qt 4.7.4 (x64-MSVC-2010-static-4.7.4)`
