@@ -1,0 +1,71 @@
+#how to add Unit tests.
+
+= Introduction =
+
+The unit tests framework is in the /test directory.
+
+
+= Add a class =
+You want to test class Foo
+  # Create a class TestFoo in the test project.
+
+= test.pro =
+{{{
+SOURCES += ../agentlib/foo.cpp\
+           testfoo.cpp
+HEADERS += ../angetlib/foo.h\
+           testfoo.h
+}}}
+
+= test/main.cpp =
+
+add
+{{{
+    {
+       TestFoo tc;
+       result += QTest::qExec(&tc, argc, argv);
+    }
+}}}
+
+= test/testfoo.h =
+{{{
+#ifndef TESTFOO_H
+#define TESTFOO_H
+#include <QtTest/QtTest>
+class Foo;
+class TestFoo : public QObject
+{
+    Q_OBJECT
+private:
+    Foo* foo;
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testBar();
+};
+
+#endif // TESTFOO_H
+
+}}}
+
+= test/testfoo.cpp=
+{{{
+#include "testfoo.h"
+#include "foo.h"
+void TestFoo::initTestCase()
+{
+    foo = new Foo;
+}
+void TestFoo::cleanupTestCase()
+{
+    delete foo;
+}
+
+void TestMainWindow::testBar()
+{
+    QTEST( actualValue, expectedValue  );
+    QVERIFY( true );
+}
+
+
+}}}
