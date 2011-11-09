@@ -2,6 +2,9 @@
 #include <QDebug>
 #include <jvmti.h>
 
+//see http://hope.nyc.ny.us/~lprimak/java/demo/jvmti/waiters/src/Agent.cpp
+//A lot of code was pulled from that file.
+
 static void JNICALL monitor_contended_enter(jvmtiEnv* jvmti, JNIEnv *env, jthread thread, jobject object);
 static void JNICALL monitor_contended_entered(jvmtiEnv* jvmti, JNIEnv *env, jthread thread, jobject object);
 static void JNICALL vm_init(jvmtiEnv *jvmti, JNIEnv *env, jthread thread);
