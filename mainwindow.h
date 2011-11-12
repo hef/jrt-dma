@@ -17,6 +17,7 @@ public:
 
 private slots:
     void about();
+    void addTab();
     void on_label_linkActivated(const QString &link);
 
     void on_listWidget_3_viewportEntered();

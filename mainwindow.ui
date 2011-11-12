@@ -170,6 +170,7 @@
      <string>File</string>
     </property>
     <addaction name="actionExit"/>
+    <addaction name="actionAddTab"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -188,6 +189,11 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionAddTab">
+   <property name="text">
+    <string>AddTab</string>
    </property>
   </action>
  </widget>
