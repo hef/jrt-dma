@@ -1,10 +1,10 @@
 #include "testmainwindow.h"
 #include "mainwindow.h"
-void TestMainWindow::initTestCase()
+void TestMainWindow::init()
 {
     mainWindow = new MainWindow();
 }
-void TestMainWindow::cleanupTestCase()
+void TestMainWindow::cleanup()
 {
     delete mainWindow;
 }
