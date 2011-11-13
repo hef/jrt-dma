@@ -588,7 +588,7 @@ void graph<T>::topologicalSort(graph<T> &g, list<T>& tlist)
 	////////  ADD AGENT CODE TO HANDLE CYCLE  ////////
 	/////////  ADD GUI CODE TO HANDLE CYCLE  /////////
 	//////////////////////////////////////////////////
-		cout << "graph topologicalSort(): graph has a cycle" << "\n";
+        //	cout << "graph topologicalSort(): graph has a cycle" << "\n";
 	}
 }
 

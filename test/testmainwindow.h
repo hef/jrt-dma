@@ -8,8 +8,8 @@ class TestMainWindow : public QObject
 private:
     MainWindow* mainWindow;
 private slots:
-    void initTestCase();
-    void cleanupTestCase();
+    void init();
+    void cleanup();
     void show();
 };
 
