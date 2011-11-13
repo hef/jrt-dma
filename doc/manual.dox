@@ -16,6 +16,8 @@ Further debugging of the application is left up to the user.
 
 @section Unit Unit testing
 
+To run the existing unit testing, run test.exe from the test/ directory.
+
 @subsection Agent Agent Component
 It is possible to write unit test code for the agent via the JNI interface to the virtual machine.  The parameters can be added to launch the DDAgent.dll with the JVM, and we can test both Deadlock and non deaadlock situations with sample Java programs.
 
