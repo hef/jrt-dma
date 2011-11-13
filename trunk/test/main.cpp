@@ -13,6 +13,5 @@ int main(int argc, char *argv[])
        TestGraph tc;
        result += QTest::qExec(&tc, argc, argv);
     }
-    //return a.exec();
     return result;
 }

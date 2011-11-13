@@ -18,5 +18,3 @@ HEADERS  += testmainwindow.h\
         testgraph.h
 
 FORMS += ../agentlib/mainwindow.ui
-
-
