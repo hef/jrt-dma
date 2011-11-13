@@ -35,7 +35,7 @@ public:
 private slots:
     void about();
     void addTab();
-    void test();
+    void test();    //exists so people can put methods here they wish to test
 
 private:
     Ui::MainWindow *ui;
