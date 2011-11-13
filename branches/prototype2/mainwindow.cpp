@@ -26,9 +26,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::test()
 {
-    removeStackLine( 3, 0 );
-    removeThreadDependency( 3, 0 );
-    removeSyncedObj( 3, 0 );
+    //removeStackLine( 3, 0 );
+    //removeThreadDependency( 3, 0 );
+    //removeSyncedObj( 3, 0 );
+
+    removeTab( QString( "NewTab") );
 }
 
 void MainWindow::about()
@@ -39,25 +41,27 @@ void MainWindow::about()
                           "Sarath Kumar,<br>"
                           "Mike Salata,<br>"
                           "Niyaz Amanullah,<br>"));
-    addStackLine( 3, "testAddStackLine" );
-    addThreadDependency( 3, "testAddThreadDependency" );
-    addSyncedObj( 3, "testAddSyncedObj" );
+    //addStackLine( 3, "testAddStackLine" );
+    //addThreadDependency( 3, "testAddThreadDependency" );
+    //addSyncedObj( 3, "testAddSyncedObj" );
 }
 
 
 int MainWindow::findTab( QString tabName )
 {
-    for( int i =(ui->tabWidget->count()-1); i<=0; i--)
+    for( int i =(ui->tabWidget->count()-1); i>=0; i--)
     {
         if( ui->tabWidget->tabText(i) == tabName )
             return i;
     }
-    return NULL;
+    return -1;
 }
 
 void MainWindow::removeTab( QString tabName )
 {
-    ui->tabWidget->removeTab( findTab(tabName) );
+    int whatWeFind = findTab(tabName);
+    if( whatWeFind >= 0 );
+        ui->tabWidget->removeTab( whatWeFind );
 }
 
 void MainWindow::addTab()
@@ -70,7 +74,6 @@ void MainWindow::addTab()
 void MainWindow::addTab( QString tabName )
 {
     QSplitter *threadOutputSplitter;
-    //QWidget myNewTab = new QWidget(ui->tabWidget, 0);
     int myNewTab=0;
 
     myNewTab = ui->tabWidget->addTab( new QWidget( ui->tabWidget->widget( myNewTab ) ), tabName );
