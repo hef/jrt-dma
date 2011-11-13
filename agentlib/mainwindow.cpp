@@ -10,11 +10,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( about() ) );
     connect( ui->actionAddTab, SIGNAL( triggered() ), this, SLOT( addTab() ) );
+    connect( ui->actionTest, SIGNAL( triggered() ), this, SLOT( test() ) );
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::test()
+{
+    //removeStackLine( 3, 0 );
+    //removeThreadDependency( 3, 0 );
+    //removeSyncedObj( 3, 0 );
+
+    removeTab( QString( "NewTab") );
 }
 
 void MainWindow::about()
@@ -25,22 +35,28 @@ void MainWindow::about()
                           "Sarath Kumar,<br>"
                           "Mike Salata,<br>"
                           "Niyaz Amanullah,<br>"));
-    addStackLine( 3, "testAddStackLine" );
-    addThreadDependency( 3, "testAddThreadDependency" );
-    addSyncedObj( 3, "testAddSyncedObj" );
+    //addStackLine( 3, "testAddStackLine" );
+    //addThreadDependency( 3, "testAddThreadDependency" );
+    //addSyncedObj( 3, "testAddSyncedObj" );
 }
 
 
 int MainWindow::findTab( QString tabName )
 {
-    for( int i =(ui->tabWidget->count()-1); i<=0; i--)
+    for( int i =(ui->tabWidget->count()-1); i>=0; i--)
     {
         if( ui->tabWidget->tabText(i) == tabName )
             return i;
     }
-    return NULL;
+    return -1;
 }
 
+void MainWindow::removeTab( QString tabName )
+{
+    int whatWeFind = findTab(tabName);
+    if( whatWeFind >= 0 );
+        ui->tabWidget->removeTab( whatWeFind );
+}
 
 void MainWindow::addTab()
 {
@@ -52,113 +68,73 @@ void MainWindow::addTab()
 void MainWindow::addTab( QString tabName )
 {
     QSplitter *threadOutputSplitter;
-    //QWidget myNewTab = new QWidget(ui->tabWidget, 0);
     int myNewTab=0;
 
     myNewTab = ui->tabWidget->addTab( new QWidget( ui->tabWidget->widget( myNewTab ) ), tabName );
 
-    //QWidget* itemToSearch = ui->tabWidget->widget( myNewTab );
-
-
-    //threadOutputSplitter->addWidget( new QListWidget() );
-    //threadOutputSplitter->addWidget( new QLabel( "Thread Dependancies") );
-    //QWidget threadDependancies =
-    //XXXsplitXXX->addWidget( new QVBox//addWidget( new QVBoxLayout() );
-
-    //threadOutputSplitter =  ui->tabWidget->widget( myNewTab );
     threadOutputSplitter =  new QSplitter( ui->tabWidget->widget( myNewTab ) );
     threadOutputSplitter->setOrientation(Qt::Vertical);
-    //vector<QListWidget*> displayBoxes;
-
-/*
-    new QLabel( "Thread Dependancies",threadOutputSplitter,0);
-    new QListWidget( threadOutputSplitter );
-    new QLabel( "Call Stack",threadOutputSplitter,0);
-    new QListWidget( threadOutputSplitter );
-    new QLabel( "Synchronized Objects",threadOutputSplitter,0);
-    new QListWidget( threadOutputSplitter );
-    */
-
 
     threadOutputSplitter->addWidget( new QLabel( "Thread Dependancies") );
-    //displayBoxes.push_back( new QListWidget );
     threadOutputSplitter->addWidget( new QListWidget );
 
     threadOutputSplitter->addWidget( new QLabel( "Call Stack") );
-    //displayBoxes.push_back( new QListWidget );
     threadOutputSplitter->addWidget( new QListWidget );
 
     threadOutputSplitter->addWidget( new QLabel( "Synchronized Objects") );
-    //displayBoxes.push_back( new QListWidget );
     threadOutputSplitter->addWidget( new QListWidget );
 
-
-    //QVBoxLayout *threadDependancies = new QVBoxLayout( threadOutputSplitter );
-
-    //new QLabel( "Thread Dependancies", threadDependancies, 0);
-    //new QListWidget( threadDependancies );
-    //new QListWidget( *threadDependancies );
-
-/*
-    QVBoxLayout *threadDependancies = new QVBoxLayout( threadOutputSplitter );
-    //threadDependancies->setOrientation()
-    //QVBoxLayout *threadDependancies = new QVBoxLayout;
-
-    threadDependancies->addWidget( new QLabel( "Thread Dependancies") );
-    threadDependancies->addWidget(  new QListWidget() );
-
-
-    QVBoxLayout *callStack = new QVBoxLayout( threadOutputSplitter );
-
-    callStack->addWidget( new QLabel( "Call Stack") );
-    callStack->addWidget(  new QListWidget() );
-
-    QVBoxLayout *objSync = new QVBoxLayout( threadOutputSplitter );
-
-    objSync->addWidget( new QLabel( "Synchronized Objects") );
-    objSync->addWidget(  new QListWidget() );
-*/
 }
 
 void MainWindow::addStackLine( int thread, QString message )
 {
-    QObjectList queryList;queryList = ui->tabWidget->widget(thread)->children();
-
-    QSplitter *outDisplaySplitter = (QSplitter*)queryList.back();
-    QListWidget* listDisplayed;
-    QWidget* temp = outDisplaySplitter->widget( 2 );queryList = temp->parent()->children();
-
-    listDisplayed = (QListWidget*)queryList.at(2);
-    listDisplayed = (QListWidget*)listDisplayed;
+    QListWidget* listDisplayed = getDisplayedList( thread, 1 );
     listDisplayed->addItem( message );
+}
+
+void MainWindow::removeStackLine( int thread, int row )
+{
+    QListWidget* listDisplayed = getDisplayedList( thread, 1 );
+    listDisplayed->takeItem( row );//->~QListWidgetItem();
 }
 
 void MainWindow::addThreadDependency( int thread, QString message )
 {
-    QObjectList queryList;
-    queryList = ui->tabWidget->widget(thread)->children();
-
-    QSplitter *outDisplaySplitter = (QSplitter*)queryList.back();
-    QListWidget* listDisplayed;
-    QWidget* temp = outDisplaySplitter->widget( 4 );
-    queryList = temp->parent()->children();
-
-    listDisplayed = (QListWidget*)queryList.at(4);
-    listDisplayed = (QListWidget*)listDisplayed;
+    QListWidget* listDisplayed = getDisplayedList( thread,2 );
     listDisplayed->addItem( message );
 }
 
+void MainWindow::removeThreadDependency( int thread, int row )
+{
+    QListWidget* listDisplayed = getDisplayedList( thread, 2 );
+    listDisplayed->takeItem( row );//->~QListWidgetItem();
+}
+
+
 void MainWindow::addSyncedObj( int thread, QString message )
+{
+
+    QListWidget* listDisplayed = getDisplayedList( thread, 3 );
+    listDisplayed->addItem( message );
+}
+
+void MainWindow::removeSyncedObj( int thread, int row )
+{
+    QListWidget* listDisplayed = getDisplayedList( thread, 3 );
+    listDisplayed->takeItem( row );//->~QListWidgetItem();
+}
+
+QListWidget* MainWindow::getDisplayedList( int thread, int row )
 {
     QObjectList queryList;
     queryList = ui->tabWidget->widget(thread)->children();
 
     QSplitter *outDisplaySplitter = (QSplitter*)queryList.back();
     QListWidget* listDisplayed;
-    QWidget* temp = outDisplaySplitter->widget( 0 );
+    QWidget* temp = outDisplaySplitter->widget( 4-(row-1)*2 );
     queryList = temp->parent()->children();
 
-    listDisplayed = (QListWidget*)queryList.at(0);
+    listDisplayed = (QListWidget*)queryList.at( 4-(row-1)*2 );
     listDisplayed = (QListWidget*)listDisplayed;
-    listDisplayed->addItem( message );
+    return listDisplayed;
 }
