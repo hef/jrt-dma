@@ -3,11 +3,29 @@
 #include <string.h>
 #include "jni.h"
 #include "jvmti.h"
+<<<<<<< .mine
+#include <list>
+#include <vector>
+#include <string>
+using namespace std;
 
+=======
+
+>>>>>>> .r66
 static jvmtiEnv *jvmti = NULL;
 static jvmtiCapabilities capa;
 static jlong combined_size;
+<<<<<<< .mine
 
+list<jthread> THREAD_LIST;
+list<list<char*> > STACK_TRACE_LIST;
+list<char*> trace_list;
+
+
+
+=======
+
+>>>>>>> .r66
 static int num_class_refs;
 static int num_field_refs;
 static int num_array_refs;
@@ -94,9 +112,27 @@ static void get_thread_name(jvmtiEnv *jvmti, jthread thread, char *tname, int ma
 // VM Death callback
 static void JNICALL callbackVMDeath(jvmtiEnv *jvmti_env, JNIEnv* jni_env)
 {
+    list<char*> test;
+
     enter_critical_section(jvmti);
     {
+
         printf("Got VM Death event\n");
+
+//        int size1 = THREAD_LIST.size();
+//        printf("Size of Thread LIST: %d",size1);
+//        printf("\n");
+
+//        int size = STACK_TRACE_LIST.size();
+//        printf("Size of STACK LIST: %d",size);
+//        printf("\n");
+
+//        test = STACK_TRACE_LIST.front();
+//        int size2 = test.size();
+//        printf("stack trace of 1 thread: %d",size2);
+//        printf("\n");
+
+
     }
     exit_critical_section(jvmti);
 }
@@ -110,13 +146,30 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
  {
     enter_critical_section(jvmti_env);
     {
+<<<<<<< .mine
+      jvmtiError err, err1, err2, err4;
+      jvmtiThreadInfo info1;
+=======
       jvmtiError err, err1, err2;
       jvmtiThreadInfo info1;
+>>>>>>> .r66
       jvmtiFrameInfo frames[5];
       jint count;
       jint thr_count;
       jthread *thr_ptr;
       jvmtiError err3;
+<<<<<<< .mine
+
+      jint flag = 0;
+
+      jint owned_monitor_count_ptr, thr_st_ptr;
+      jobject *owned_monitors_ptr;
+      jvmtiMonitorUsage * info_ptr = (jvmtiMonitorUsage *)malloc(sizeof(jvmtiMonitorUsage));
+
+
+
+      /* Get All Threads */
+=======
 
       jint flag = 0;
 
@@ -125,6 +178,7 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
 
 
       /* Get All Threads */
+>>>>>>> .r66
      err = (jvmti)->GetAllThreads(&thr_count, &thr_ptr);
      if (err != JVMTI_ERROR_NONE)
      {
@@ -142,12 +196,18 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
             /* Make sure the stack variables are garbage free */
             (void)memset(&info1,0, sizeof(info1));
             err1 = (jvmti)->GetThreadInfo(thr_ptr[i], &info1);
+<<<<<<< .mine
+            err1 = (jvmti)->GetOwnedMonitorInfo(thr_ptr[i], &owned_monitor_count_ptr, &owned_monitors_ptr);
+            err1 = (jvmti)->GetThreadState(thr_ptr[i], &thr_st_ptr);
+
+=======
 
             err1 = (jvmti)->GetOwnedMonitorInfo(thr_ptr[i], &owned_monitor_count_ptr, &owned_monitors_ptr);
 
             err1 = (jvmti)->GetThreadState(thr_ptr[i], &thr_st_ptr);
 
 
+>>>>>>> .r66
             if (err1 != JVMTI_ERROR_NONE)
             {
                 printf("(GetThreadInfo) Error expected: %d, got: %d\n", JVMTI_ERROR_NONE, err1);
@@ -158,8 +218,102 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
             printf("Thread %d : %s\n",i+1,info1.name);
             printf("=====================================\n");
 
+<<<<<<< .mine
+            ////////////PUSHING THREAD INTO LIST//////////////////////////////////////////////////////////////////
+            THREAD_LIST.push_back(thr_ptr[i]);
+=======
             //printf("Priority: %d  \ncontext class loader:%s\n", info1.priority,(info1.context_class_loader == NULL ? ": NULL" : "Not Null"));
+>>>>>>> .r66
 
+<<<<<<< .mine
+           //printf("Priority: %d  \ncontext class loader:%s\n", info1.priority,(info1.context_class_loader == NULL ? ": NULL" : "Not Null"));
+           // printf("Monitors Owned by this thread : %d\n", owned_monitor_count_ptr);
+
+            printf("\nMonitors");
+            printf("\n--------\n");
+            printf("%d",owned_monitor_count_ptr);
+            printf("\n--------");
+
+
+            printf("\n\nSTATE\n");
+                printf("-----\n");
+
+
+
+
+            if  ( thr_st_ptr & JVMTI_THREAD_STATE_ALIVE) {
+                        printf("Thread %s is Alive\n", info1.name);
+                            flag = 1;
+                    }
+
+                    if  ( thr_st_ptr & JVMTI_THREAD_STATE_TERMINATED) {
+
+                       printf("Thread %s has been Terminated\n", info1.name);
+                            flag = 1;
+                    }
+
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_RUNNABLE ) {
+
+                       printf("Thread %s is Runnable\n", info1.name);
+                            flag = 1;
+                    }
+
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_WAITING ) {
+                       printf("Thread %s waiting\n", info1.name);
+                            flag = 1;
+                    }
+
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_WAITING_INDEFINITELY ) {
+                       printf("Thread %s waiting indefinitely\n", info1.name);
+                            flag = 1;
+                    }
+
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT ) {
+                       printf("Thread %s waiting with Timeout\n", info1.name);
+                            flag = 1;
+                    }
+
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_SLEEPING ) {
+                       printf("Thread %s Sleeping \n", info1.name);
+                            flag = 1;
+                    }
+
+
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_IN_OBJECT_WAIT ) {
+                       printf("Thread %s is in Object Wait \n", info1.name);
+                            flag = 1;
+                    }
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_PARKED ) {
+                       printf("Thread %s is Parked \n", info1.name);
+                            flag = 1;
+                    }
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER ) {
+                       printf("Thread %s is blocked on monitor enter \n", info1.name);
+                            flag = 1;
+                    }
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_SUSPENDED ) {
+                       printf("Thread %s is Suspended \n", info1.name);
+                            flag = 1;
+                    }
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_INTERRUPTED ) {
+                       printf("Thread %s is Interrupted \n", info1.name);
+                            flag = 1;
+                    }
+                    if ( thr_st_ptr & JVMTI_THREAD_STATE_IN_NATIVE ) {
+
+                       printf("Thread %s is in Native \n", info1.name);
+                            flag = 1;
+                    }
+
+                    if ( flag != 1 )  {
+                               printf("Illegal value  %d for Thread State\n", thr_st_ptr);
+                           }
+
+
+
+
+
+=======
             printf("Number of Monitors Owned by this thread : %d\n\nSTATE:\n", owned_monitor_count_ptr);
 
 
@@ -272,6 +426,7 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
 
 
 
+>>>>>>> .r66
             /* Every string allocated by JVMTI needs to be freed */
             err2 = (jvmti)->Deallocate((unsigned char*)info1.name);
 
@@ -294,11 +449,17 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
                char *methodName;
                char *declaringClassName;
                jclass declaring_class;
+               char* trace1;
                int i=0;
 
+<<<<<<< .mine
+               printf("\n\nSTACK TRACE\n");
+               printf("-----------\n");
+=======
 
                printf("\n\nStack Trace\n");
                printf("-----------\n");
+>>>>>>> .r66
                printf("Stack Trace Depth: %d\n", count);
                for ( i=0; i < count; i++)
                {
@@ -311,10 +472,17 @@ static void callbackMonitorContendedEnter(jvmtiEnv *jvmti_env,JNIEnv* jni_env,jt
                                 if (err3 == JVMTI_ERROR_NONE)
                                 {
                                         printf("at method %s() in class %s\n", methodName, declaringClassName);
+                                        trace1 = ("at method %s() in class %s\n", methodName, declaringClassName);
+                                        trace_list.push_back(trace1);
                                 }
                                 else {printf("\nError found !\n");}
                        }
                }
+
+               STACK_TRACE_LIST.push_back(trace_list);
+               trace_list.clear();
+
+
                printf("\n");
                err3 = (jvmti)->Deallocate((unsigned char*)methodName);
                err3 = (jvmti)->Deallocate((unsigned char*)declaringClassName);
@@ -347,6 +515,27 @@ static void JNICALL callbackVMInit(jvmtiEnv *jvmti_env, JNIEnv* jni_env, jthread
     exit_critical_section(jvmti);
 }
 
+<<<<<<< .mine
+
+
+
+
+//static void JNICALL callbackMonitorContendedEntered(jvmtiEnv* jvmti, JNIEnv *env, jthread thread, jobject object)
+//{
+//    enter_critical_section(jvmti);
+//    {
+
+//    }
+//    exit_critical_section(jvmti);
+//}
+
+
+
+
+
+
+
+=======
 
 
 
@@ -366,6 +555,7 @@ static void JNICALL callbackVMInit(jvmtiEnv *jvmti_env, JNIEnv* jni_env, jthread
 
 
 
+>>>>>>> .r66
 JNIEXPORT jint JNICALL Agent_OnLoad(JavaVM *vm, char *options, void *reserved)
 {
     printf("\nAgent_OnLoad : Agent Loaded !\n");
@@ -397,7 +587,12 @@ JNIEXPORT jint JNICALL Agent_OnLoad(JavaVM *vm, char *options, void *reserved)
      capa.can_generate_vm_object_alloc_events = 1;
      capa.can_tag_objects = 1;
      capa.can_generate_monitor_events=1;
+<<<<<<< .mine
+     capa.can_get_monitor_info = 1;
 
+=======
+
+>>>>>>> .r66
      error = (jvmti)->AddCapabilities(&capa);
      check_jvmti_error(jvmti, error, "Unable to get necessary JVMTI capabilities.");
 
@@ -414,9 +609,14 @@ JNIEXPORT jint JNICALL Agent_OnLoad(JavaVM *vm, char *options, void *reserved)
 
       error = (jvmti)->SetEventNotificationMode(JVMTI_ENABLE, JVMTI_EVENT_VM_INIT, (jthread)NULL);
       error = (jvmti)->SetEventNotificationMode(JVMTI_ENABLE, JVMTI_EVENT_VM_DEATH, (jthread)NULL);
+<<<<<<< .mine
+      error = (jvmti)->SetEventNotificationMode(JVMTI_ENABLE, JVMTI_EVENT_MONITOR_CONTENDED_ENTER, (jthread)NULL);
+
+=======
       error = (jvmti)->SetEventNotificationMode(JVMTI_ENABLE, JVMTI_EVENT_MONITOR_CONTENDED_ENTER, (jthread)NULL);
 
 
+>>>>>>> .r66
       check_jvmti_error(jvmti, error, "Cannot set event notification");
 
       error = (jvmti)->CreateRawMonitor("Agent Data", &(gdata->lock));
