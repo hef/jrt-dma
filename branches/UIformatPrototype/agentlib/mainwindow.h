@@ -3,9 +3,7 @@
 #include "DDAgent_global.h"
 #include <QMainWindow>
 #include <QListWidget>
-#include <QListWidgetItem>
-#include <QMessageBox>
-#include <QWidget>
+
 namespace Ui {
     class MainWindow;
 }

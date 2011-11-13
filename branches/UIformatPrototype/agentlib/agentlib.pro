@@ -11,8 +11,11 @@ SOURCES += ddagent.cpp \
 
 HEADERS += ddagent.h\
         DDAgent_global.h \
-    mainwindow.h
+    mainwindow.h \
+    graph_interface.h \
+    graph.h
 
 FORMS += \
     mainwindow.ui
+
 
