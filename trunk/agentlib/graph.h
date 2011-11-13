@@ -21,16 +21,14 @@ using namespace std;
 class neighbor
 {
 	public:
-		// index of the destination vertex in the vector vInfo of vertex
-		// properties
+                /// index of the destination vertex in the vector vInfo of vertex properties
 		int dest;
 
 		// constructor
 		neighbor(int d=0): dest(d)
 		{}
 
-		// operators for the neighbor class that compare the
-		// destination vertices
+                /// operators for the neighbor class that compare the destination vertices
 		friend bool operator< (const neighbor& lhs, const neighbor& rhs)
 		{
 			return lhs.dest < rhs.dest;
@@ -42,43 +40,40 @@ class neighbor
 		}
 };
 
-// maintains vertex properties, including its set of
-// neighbors
+/// maintains vertex properties, including its set of neighbors
 template <typename T>
 class vertexInfo
 {
 	public:
-		// used by graph algorithms
+                /// used by graph algorithms
 		enum vertexColor { WHITE, GRAY, BLACK };
 
-		// iterator pointing at a pair<T,int> object in the vertex map
+                /// iterator pointing at a pair<T,int> object in the vertex map
                 typename map<T,int>::iterator vtxMapLoc;
 
-		// set of adjacent (neighbor) objects for the current vertex
+                /// set of adjacent (neighbor) objects for the current vertex
 		set<neighbor> edges;
 
 		/// maintains the in-degree of the vertex
 		int inDegree;
 
-		// indicates whether the object currently represents a vertex
+                /// indicates whether the object currently represents a vertex
 		bool occupied;
 
-		// indicate if a vertex is marked in an algorithm that traverses
-		// the vertices of a graph
+                /// indicate if a vertex is marked in an algorithm that traverses the vertices of a graph
 		vertexColor color;
 
-		// available to algorithms for storing relevant data values
+                /// available to algorithms for storing relevant data values
 		int dataValue;
 
-		// available to graph algorithms; holds parent which is
-		// a vertex that has an edge terminating in the current vertex
+                /// available to graph algorithms; holds parent which is a vertex that has an edge terminating in the current vertex
 		int parent;
 
-		// default constructor
+                /// default constructor
 		vertexInfo(): inDegree(0), occupied(true)
 		{}
 
-		// constructor with iterator pointing to the vertex in the map
+                /// constructor with iterator pointing to the vertex in the map
                 vertexInfo(typename map<T,int>::iterator iter):
 				vtxMapLoc(iter), inDegree(0), occupied(true)
 		{}
@@ -94,13 +89,13 @@ class graph
             const_iterator()
             {}
 
-				// converts a map iterator to a graph iterator
+            /// converts a map iterator to a graph iterator
             const_iterator(typename map<T,int>::const_iterator i)
             {
                                         *((typename map< T, int >::const_iterator *)this) = i;
 			}
 
-				// return the vertex pointed to by the iterator
+            /// return the vertex pointed to by the iterator
             const T& operator* () const
             {
                typename map<T,int>::const_iterator p = *this;
@@ -111,67 +106,68 @@ class graph
 
       typedef const_iterator iterator;
 
-		// constructors
-	  graph(); // constructor. initialize numVertices and numEdges to 0
-	  graph(const graph<T>& g);	// copy constructor
+          /// constructors
+          graph(); /// constructor. initialize numVertices and numEdges to 0
+          graph(const graph<T>& g);	/// copy constructor
 
-	    // check graph
-      bool empty() const; // is the graph empty?
+            /// check graph
+      bool empty() const; /// is the graph empty?
 
-		// access methods
-	  int numberOfVertices() const;	// return the number of vertices in the graph
-	  int numberOfEdges() const; // return the number of edges in the graph
-	  int inDegree(const T& v) const; // return the number of edges entering  v.
-	  int outDegree(const T& v) const; // return the number of edges leaving  v.
+          //access methods
+          int numberOfVertices() const;	/// return the number of vertices in the graph
+          int numberOfEdges() const; /// return the number of edges in the graph
+          int inDegree(const T& v) const; /// return the number of edges entering  v.
+          int outDegree(const T& v) const; // return the number of edges leaving  v.
 
-      set<T> getNeighbors(const T& v) const; // return a set containing the neighbors of v.
+      set<T> getNeighbors(const T& v) const; /// return a set containing the neighbors of v.
 
-		// insertion methods
-	  void insertEdge(const T& v1, const T& v2); // add the edge (v1,v2) to the graph.
-      void insertVertex(const T& v);	// insert v into the graph.
+                /// insertion methods
+          void insertEdge(const T& v1, const T& v2); /// add the edge (v1,v2) to the graph.
+      void insertVertex(const T& v);	/// insert v into the graph.
 
-		// deletion methods
-	  void eraseEdge(const T& v1, const T& v2);	// erase edge (v1,v2) from the graph
-      void eraseVertex(const T& v);	// erase v from the graph
-	  void clear();	// remove all the vertices and edges from the graph
+                /// deletion methods
+          void eraseEdge(const T& v1, const T& v2);	/// erase edge (v1,v2) from the graph
+      void eraseVertex(const T& v);	/// erase v from the graph
+          void clear();	/// remove all the vertices and edges from the graph
 
-      // iterator methods returns corresponding map iterator
+      /// iterator methods returns corresponding map iterator
 	  iterator begin();
 	  iterator end();
 	  const_iterator begin() const;
 	  const_iterator end() const;
 
-	  // algorithms
-	  // find a topological sort of an acyclic graph
+          /// algorithms
+          /// find a topological sort of an acyclic graph
 	  void topologicalSort(graph<T> &g, list<T>& tlist);
 
-	  // check for an acyclic graph
+          /// check for an acyclic graph
       bool noCycle(graph<T>& g);
 
-	  // visit each vertex
+          /// visit each vertex
       void visit(graph<T>& g, const T& sVertex, list<T> &outList);
 
 	private:
       typedef map<T,int> vertexMap;
 
-	  vertexMap vtxMap;
-			// store vertex in a map with its name as the key and the index
-			// of the corresponding vertexInfo object in the vInfo
-			// vector as the value
 
-	  vector<vertexInfo<T> > vInfo;
-			// list of vertexInfo objects corresponding to the vertices
+            /** store vertex in a map with its name as the key and the index
+            of the corresponding vertexInfo object in the vInfo
+            vector as the value*/
+            vertexMap vtxMap;
+
+
+            /// list of vertexInfo objects corresponding to the vertices
+            vector<vertexInfo<T> > vInfo;
 
 	  int numVertices;
-	  int numEdges;
-			// current size (vertices and edges) of the graph
+          int numEdges; /// current size (vertices and edges) of the graph
 
-	  stack<int> availStack;
-			// availability stack for storing unused indices in vInfo
+          stack<int> availStack; /// availability stack for storing unused indices in vInfo
 
-       // check graph
+       /** check graph
+       uses vtxMap to obtain the index of v in vInfo */
 	  int getvInfoIndex(const T& v) const;
-     		// uses vtxMap to obtain the index of v in vInfo
+
 };
 
 /////////////////////////////////////////////////////////////
