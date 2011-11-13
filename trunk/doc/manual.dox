@@ -1,0 +1,47 @@
+/** @page Usage Usage
+The entire Agent was designed with simplicity in mind.
+
+To run the project as a sub component of the java virtual machine, run:
+
+java -agentpath:/path/to/DDAgent.dll. “YourJavaProgram”
+
+The agent will startup with the java virtual machine, and silently monitor thread behavior while checking for instances of deadlock.  There will be no User Interface available during this time. except for occasional diagnostic messages that can be safely ignored.
+
+When a Deadlock occurs, and the agent detects it, A Dialog will pop into existence to let the user now.  Additionally, the Dialog will contain a set of tabbed window panes. There is 1 pane per active thread.  Each pane contains information about the thread, such as its stack trace, the owned Object Monitors, and the Object Monitor it is waiting for, if any.
+
+Further debugging of the application is left up to the user.
+*/
+
+/** @page Testing Testing
+
+@section Unit Unit testing
+
+@subsection Agent Agent Component
+It is possible to write unit test code for the agent via the JNI interface to the virtual machine.  The parameters can be added to launch the DDAgent.dll with the JVM, and we can test both Deadlock and non deaadlock situations with sample Java programs.
+
+@subsection Graph Graph Component
+The Graph component has some existing unit tests.  In the process of developing the project in became necessary to test the behavior of the Graph functionality.
+
+@subsection GUI GUI Component.
+The project currently contains basic unit testing for the GUI component, to ensure the window can open and close.   Further tests need to be written to ensure that the data passed into the GUI component contained within the Thread data is displayed correctly.
+
+@section Integration Integration Testing.
+The largest adjacent system that requires testing is the JVM and the JVMTI.  Unfortunately, during the course of development, we discovered that information about the state of the JVM was inaccurate and/or incomplete.
+
+For example:  When the JVM was queried for a list of threads and their respective owned monitors, we found that several threads claimed to own the same monitor.  That is, multiple threads claimed to simultaneously have a lock on data.  This is not a feasible situation, so either our understanding of the information is lacking, or the JVMTI is misreporting data.
+
+In another attempt to gain useful information from the JVM, we gathered a list of monitors and queried for each monitor’s owning thread and list of waiting threads.  Given all this information, during a clear Deadlock situation, We were not able to create a  clear picture of the state of the JVM that indicated a deadlock was present.  It is unclear if not all monitors were collected successfully, or if monitors were not reporting all the waiters, or both.
+
+That was the extent of the existing testing we were able to perform on the JVMTI.  A few more paths may be worth exploring:
+
+The collection of data may have had race conditions with the changes in data.  This might affect Method 1’s ability to report data accurately.  Method 2 did not trigger until a deadlock was assured, and should have revealed more information.
+
+We could experiment further with Suspending threads and querying their state, but suspending a thread affects the behavior of the monitors.  It’s been reported to us by the client that suspending a thread can cause it to give up it’s Owned Monitors.
+
+@section Acceptance Acceptance testing.
+
+To test client acceptance we will visit the client during a debug sessions to ensure that given a trivial Deadlock, the client is able to Identify the stack traces and threads and cause of the deadlock.
+
+Furthermore, the client should be able to identify the threads and objects involved in a Deadlock in any given program of their choosing.  The client may or may not be able to immediately identify the cause.
+
+*/
