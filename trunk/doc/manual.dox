@@ -22,7 +22,7 @@ To run the existing unit testing, run test.exe from the test/ directory.
 It is possible to write unit test code for the agent via the JNI interface to the virtual machine.  The parameters can be added to launch the DDAgent.dll with the JVM, and we can test both Deadlock and non deaadlock situations with sample Java programs.
 
 @subsection Graph Graph Component
-The Graph component has some existing unit tests.  In the process of developing the project in became necessary to test the behavior of the Graph functionality.
+The Graph component has some existing unit tests.  In the process of developing the project in became necessary to test the behavior of the Graph functionality.  A full unit test testplan can be found in the doc directory
 
 @subsection GUI GUI Component.
 The project currently contains basic unit testing for the GUI component, to ensure the window can open and close.   Further tests need to be written to ensure that the data passed into the GUI component contained within the Thread data is displayed correctly.

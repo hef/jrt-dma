@@ -1,0 +1,58 @@
+/** @page Developing Getting Started Guide for developers
+
+
+@section Download Download
+
+Download and install the following programs:
+
+- @link http://www.oracle.com/technetwork/java/javase/downloads/jdk-7u1-download-513651.html JDK @endlink
+- @link http://qt.nokia.com/downloads QT SDK @endlink
+- @link http://tortoisesvn.net/downloads.html Tortoise SVN @endlink
+- @link goo.gl/usm9y Windows 7 SDK @endlink
+  - Enable Redistributable Packages >> Debugging Tools
+
+
+@section configure Configure Environment 
+
+run the following in a CMD window session.
+@code
+setx JAVA_HOME "C:\Program Files\Java\jdk1.7.0_01"
+@endcode
+
+Restart QTCreator or any shell sessions you are using after using setx.
+
+@section Getting Getting the code
+Go to http://code.google.com/p/jrt-dma/source/checkout for svn checkout instructions.
+
+@section Building Building 
+Once you have the code, double click the `agent.pro` file. QtCreator will open the project up.
+
+@subsection QT Static QT build
+
+- Install MSVC 2010.
+- Download and extract @link http://dl.dropbox.com/u/15436827/x64-MSVC-2010-static-4.7.4.7z x64-MSVC-2010-static-4.7.4.7z @endlink to `C:\Qt\x64-MSVC-2010-static-4.7.4\`.  The C:\Qt\ part is important.  You may need to install @link http://www.7-zip.org/ 7zip@endlink.
+- Add 64-MSVC-2010-static-4.7.4 as a tool chain and use it with MSVC2010.
+  - Go to Tools >> Options >> Qt4 >> Add
+  - Add C:\Qt\x64-MSVC-2010-static-4.7.4\qmake.exe
+  - Open DDAgent.pro if you havn't already.
+  - Go to Projects >> Build
+  - Change Qt Version: to `Qt 4.7.4 (x64-MSVC-2010-static-4.7.4)`
+  - Change Tool chain to: `Microsoft Visual C++ Compiler 10.0 (amd64)`
+
+
+@section running Running the Agent
+  Open a build directory that contains DDagent.dll in cmd.exe
+@code
+  java -agentpath:DDagent.dll JavaProgram
+@endcode
+
+
+@section Developement Guide Lines
+
+Do not work in directly in trunk!
+
+- Copy the branch from `trunk/` into a topic branch `branches/myBugFix`.
+- Work in `branches/myBugFix`.
+- Get a @link goo.gl/5rUqr Code Review @endlink.
+- once Code Review has been approved by another team member, merge code into trunk
+*/
