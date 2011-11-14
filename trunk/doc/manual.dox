@@ -3,7 +3,7 @@ The entire Agent was designed with simplicity in mind.
 
 To run the project as a sub component of the java virtual machine, run:
 
-java -agentpath:/path/to/DDAgent.dll. “YourJavaProgram”
+@code java -agentpath:/path/to/DDAgent.dll. “YourJavaProgram” @endcode
 
 The agent will startup with the java virtual machine, and silently monitor thread behavior while checking for instances of deadlock.  There will be no User Interface available during this time. except for occasional diagnostic messages that can be safely ignored.
 
