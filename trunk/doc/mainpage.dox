@@ -6,13 +6,25 @@
 @author Steven Sennebogen
 @author Sarath Subramanian
 
-Web URL: http://code.google.com/p/jrt-dma/
+- Web URL: http://code.google.com/p/jrt-dma/
+- Issues: http://code.google.com/p/jrt-dma/issues/list
+- SVN access: http://jrt-dma.googlecode.com/svn/trunk/
+- Source Code: http://code.google.com/p/jrt-dma/source
+- Mailing List: http://groups.google.com/group/cs442groupa
 
-Issues: http://code.google.com/p/jrt-dma/issues/list
 
-SVN access: http://jrt-dma.googlecode.com/svn/trunk/
+@section Usage Usage
 
-Source Code: http://code.google.com/p/jrt-dma/source
+The entire Agent was designed with simplicity in mind.
 
-Mailing List: http://groups.google.com/group/cs442groupa
+To run the project as a sub component of the java virtual machine, run:
+
+@code java -agentpath:/path/to/DDAgent.dll. “YourJavaProgram” @endcode
+
+The agent will startup with the java virtual machine, and silently monitor thread behavior while checking for instances of deadlock.  There will be no User Interface available during this time. except for occasional diagnostic messages that can be safely ignored.
+
+When a Deadlock occurs, and the agent detects it, A Dialog will pop into existence to let the user now.  Additionally, the Dialog will contain a set of tabbed window panes. There is 1 pane per active thread.  Each pane contains information about the thread, such as its stack trace, the owned Object Monitors, and the Object Monitor it is waiting for, if any.
+
+Further debugging of the application is left up to the user.
+
 */
