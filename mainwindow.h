@@ -14,6 +14,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    int iterate;
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -36,6 +38,7 @@ private slots:
     void about();
     void addTab();
     void test();    //exists so people can put methods here they wish to test
+    void exit();
 
 private:
     Ui::MainWindow *ui;
