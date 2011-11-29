@@ -170,8 +170,7 @@
      <string>File</string>
     </property>
     <addaction name="actionExit"/>
-    <addaction name="actionAddTab"/>
-    <addaction name="actionTest"/>
+    <addaction name="actionTest_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -198,6 +197,11 @@
    </property>
   </action>
   <action name="actionTest">
+   <property name="text">
+    <string>Test</string>
+   </property>
+  </action>
+  <action name="actionTest_2">
    <property name="text">
     <string>Test</string>
    </property>

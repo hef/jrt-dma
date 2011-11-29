@@ -16,7 +16,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( ui->actionAbout, SIGNAL( triggered() ), this, SLOT( about() ) );
     connect( ui->actionAddTab, SIGNAL( triggered() ), this, SLOT( addTab() ) );
-    connect( ui->actionTest, SIGNAL( triggered() ), this, SLOT( test() ) );
+    connect( ui->actionTest_2, SIGNAL( triggered() ), this, SLOT( test() ) );
+    connect( ui->actionExit, SIGNAL( triggered() ), this, SLOT( exit() ) );
+
+    removeTab( QString( "Thread 1") );
+    removeTab( QString( "Thread 2") );
+    removeTab( QString( "Thread 3") );
+    addTab( QString( "DEFAULT") );
+
+    iterate = 0;
 }
 
 MainWindow::~MainWindow()
@@ -24,13 +32,64 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::exit()
+{
+    exit();
+}
+
 void MainWindow::test()
 {
-    //removeStackLine( 3, 0 );
-    //removeThreadDependency( 3, 0 );
-    //removeSyncedObj( 3, 0 );
+    switch( iterate )
+    {
+    case 0:
+        addTab( QString( "DestroyJavaVM") );
+        break;
+    case 1:
+        addTab( QString( "Thread-1") );
+        break;
+    case 2:
+        addTab( QString( "Thread-0") );
+        break;
+    case 3:
+        addTab( QString( "Attach Listener") );
+        addTab( QString( "Signal Dispatcher") );
+        addTab( QString( "Finalizer") );
+        addTab( QString( "Reference Handler") );
+        break;
+    case 4:
+        QMessageBox::about(this, tr("Java Run Time Deadlock Monitoring agent (jrt-dma)"),
+                           tr("Beginning deadlock detection<br>"));
+        break;
+    case 5:
+        removeTab( QString( "Reference Handler") );
+        break;
+    case 6:
+        removeTab( QString( "Finalizer") );
+        break;
+    case 7:
+        removeTab( QString( "Signal Dispatcher") );
+        break;
+    case 8:
+        removeTab( QString( "Attach Listener") );
+        break;
+    case 9:
+        removeTab( QString( "DestroyJavaVM") );
+        ui->tabWidget->setCurrentIndex( findTab( QString("Thread-0")) );
+        break;
+    case 10:
+        addThreadDependency( findTab( QString( "Thread-0")), QString("BLOCKED on java.lang.String@419431dc owned by: Thread-1") );
+        addStackLine( findTab(QString( "Thread-0")), QString( "deadlock$1.run(deadlock.java:26)"));
+        addSyncedObj( findTab( QString( "Thread-0")), QString( " - locked java.lang.String@4c48d0c9"));
+        break;
+    case 11:
+        ui->tabWidget->setCurrentIndex( findTab( QString("Thread-1")) );
+        addThreadDependency( findTab( QString( "Thread-1")), QString("BLOCKED on java.lang.String@4c48d0c9 owned by: Thread-0") );
+        addStackLine( findTab(QString( "Thread-1")), QString( "deadlock$2.run(deadlock.java:49)"));
+        addSyncedObj( findTab( QString( "Thread-1")), QString( " - locked java.lang.String@419431dc"));
+        break;
+    }
 
-    removeTab( QString( "NewTab") );
+    iterate++;
 }
 
 void MainWindow::about()
@@ -59,6 +118,8 @@ int MainWindow::findTab( QString tabName )
 
 void MainWindow::removeTab( QString tabName )
 {
+    if( ui->tabWidget->count() == 1 )
+        addTab( QString( "DEFAULT") );
     int whatWeFind = findTab(tabName);
     if( whatWeFind >= 0 );
         ui->tabWidget->removeTab( whatWeFind );
@@ -89,6 +150,9 @@ void MainWindow::addTab( QString tabName )
 
     threadOutputSplitter->addWidget( new QLabel( "Synchronized Objects") );
     threadOutputSplitter->addWidget( new QListWidget );
+
+    if( ui->tabWidget->count() ==2 )
+        removeTab( QString( "DEFAULT"));
 
 }
 
