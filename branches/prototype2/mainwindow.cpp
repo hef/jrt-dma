@@ -98,6 +98,7 @@ void MainWindow::about()
                        tr("Created for CS442 Fall 2010<br>"
                           "The authors are Steven Sennebogen,<br>"
                           "Sarath Kumar,<br>"
+                          "Kevin Grant,<br>"
                           "Mike Salata,<br>"
                           "Niyaz Amanullah,<br>"));
     //addStackLine( 3, "testAddStackLine" );
